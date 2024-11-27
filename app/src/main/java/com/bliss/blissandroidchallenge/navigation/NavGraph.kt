@@ -26,7 +26,7 @@ fun NavGraph(
             HomeScreen(navigator = navigator)
         }
         composable(EMOJI_LIST_ROUTE) {
-            EmojiListScreen(navigator = navigator)
+            EmojiListScreen()
         }
     }
 }

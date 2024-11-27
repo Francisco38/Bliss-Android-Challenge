@@ -7,7 +7,7 @@ import com.bliss.blissandroidchallenge.domain.emojis.model.EMOJI_TABLE
 import com.bliss.blissandroidchallenge.domain.emojis.model.Emoji
 
 @Dao
-interface  EmojiDao {
+interface EmojiDao {
     @Query("SELECT * FROM $EMOJI_TABLE")
     fun getAll(): List<Emoji>
 
