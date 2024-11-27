@@ -5,30 +5,36 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import com.bliss.blissandroidchallenge.R
+import com.bliss.blissandroidchallenge.navigation.AppNavigator
+import com.bliss.blissandroidchallenge.presentation.components.ImageComponent
 import com.bliss.blissandroidchallenge.presentation.components.TextButton
-import com.bliss.blissandroidchallenge.presentation.ui.theme.BlissAndroidChallengeTheme
+import com.bliss.blissandroidchallenge.utils.toDp
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigator: AppNavigator
 ) {
     val state by remember(viewModel) { viewModel.state }.collectAsState()
 
     HomeScreenContent(
         modifier = modifier,
-        randomEmoji = { viewModel.randomEmoji() },
+        onRandomButtonClick = { viewModel.randomEmoji() },
+        onEmojiListButtonClick = { navigator.goToEmojiList() },
         data = state
     )
 }
@@ -36,7 +42,8 @@ fun HomeScreen(
 @Composable
 fun HomeScreenContent(
     modifier: Modifier = Modifier,
-    randomEmoji: () -> Unit,
+    onRandomButtonClick: () -> Unit,
+    onEmojiListButtonClick: () -> Unit,
     data: HomeState
 ) {
     Column(
@@ -53,7 +60,8 @@ fun HomeScreenContent(
             )
 
             EmojiActions(
-                onRandomButtonClick = randomEmoji
+                onRandomButtonClick = onRandomButtonClick,
+                onEmojiListButtonClick = onEmojiListButtonClick
             )
         }
     }
@@ -65,8 +73,8 @@ fun EmojiIcon(
     url: String,
     contentDescription: String
 ) {
-    AsyncImage(
-        model = url,
+    ImageComponent(
+        imageURL = url,
         contentDescription = contentDescription,
         modifier = modifier
             .size(150.dp)
@@ -77,23 +85,27 @@ fun EmojiIcon(
 @Composable
 fun EmojiActions(
     modifier: Modifier = Modifier,
-    onRandomButtonClick: () -> Unit
+    onRandomButtonClick: () -> Unit,
+    onEmojiListButtonClick: () -> Unit
 ) {
+    var randomButtonWidth by remember { mutableIntStateOf(0) }
 
     Column(
         modifier = modifier,
     ) {
         TextButton(
+            modifier = Modifier
+                .onGloballyPositioned { coordinates ->
+                    randomButtonWidth = coordinates.size.width
+                },
             onButtonClick = onRandomButtonClick,
             textRes = R.string.random_emoji
         )
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    BlissAndroidChallengeTheme {
-        HomeScreen()
+        TextButton(
+            modifier = Modifier.width(randomButtonWidth.toDp()),
+            onButtonClick = onEmojiListButtonClick,
+            textRes = R.string.emoji_list
+        )
     }
 }

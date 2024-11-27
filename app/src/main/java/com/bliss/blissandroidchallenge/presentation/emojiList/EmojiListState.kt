@@ -7,5 +7,5 @@ data class EmojiListState (
     val isLoading: Boolean = true,
     val emojiList: ImmutableList<Emoji> = ImmutableList.of(),
     val error: String? = null,
-    val emojiPosition: Int = 0
+    val isRefreshing: Boolean = false
 )

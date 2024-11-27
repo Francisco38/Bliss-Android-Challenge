@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bliss.blissandroidchallenge.di.IoDispatcher
 import com.bliss.blissandroidchallenge.domain.emojis.useCases.GetEmojiListUseCase
+import com.bliss.blissandroidchallenge.navigation.AppNavigator
 import com.bliss.blissandroidchallenge.utils.UseCaseResponse
 import com.google.common.collect.ImmutableList
 import dagger.hilt.android.lifecycle.HiltViewModel
