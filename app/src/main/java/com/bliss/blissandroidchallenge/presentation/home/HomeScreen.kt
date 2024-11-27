@@ -16,19 +16,23 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.bliss.blissandroidchallenge.R
+import com.bliss.blissandroidchallenge.navigation.AppNavigator
+import com.bliss.blissandroidchallenge.presentation.components.ImageComponent
 import com.bliss.blissandroidchallenge.presentation.components.TextButton
 import com.bliss.blissandroidchallenge.presentation.ui.theme.BlissAndroidChallengeTheme
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigator: AppNavigator
 ) {
     val state by remember(viewModel) { viewModel.state }.collectAsState()
 
     HomeScreenContent(
         modifier = modifier,
-        randomEmoji = { viewModel.randomEmoji() },
+        onRandomButtonClick = { viewModel.randomEmoji() },
+        onEmojiListButtonClick = { navigator.goToEmojiList() },
         data = state
     )
 }
@@ -36,7 +40,8 @@ fun HomeScreen(
 @Composable
 fun HomeScreenContent(
     modifier: Modifier = Modifier,
-    randomEmoji: () -> Unit,
+    onRandomButtonClick: () -> Unit,
+    onEmojiListButtonClick: () -> Unit,
     data: HomeState
 ) {
     Column(
@@ -53,7 +58,8 @@ fun HomeScreenContent(
             )
 
             EmojiActions(
-                onRandomButtonClick = randomEmoji
+                onRandomButtonClick = onRandomButtonClick,
+                onEmojiListButtonClick = onEmojiListButtonClick
             )
         }
     }
@@ -65,8 +71,8 @@ fun EmojiIcon(
     url: String,
     contentDescription: String
 ) {
-    AsyncImage(
-        model = url,
+    ImageComponent(
+        imageURL = url,
         contentDescription = contentDescription,
         modifier = modifier
             .size(150.dp)
@@ -77,7 +83,8 @@ fun EmojiIcon(
 @Composable
 fun EmojiActions(
     modifier: Modifier = Modifier,
-    onRandomButtonClick: () -> Unit
+    onRandomButtonClick: () -> Unit,
+    onEmojiListButtonClick: () -> Unit
 ) {
 
     Column(
@@ -87,13 +94,10 @@ fun EmojiActions(
             onButtonClick = onRandomButtonClick,
             textRes = R.string.random_emoji
         )
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    BlissAndroidChallengeTheme {
-        HomeScreen()
+        TextButton(
+            onButtonClick = onEmojiListButtonClick,
+            textRes = R.string.emoji_list
+        )
     }
 }
