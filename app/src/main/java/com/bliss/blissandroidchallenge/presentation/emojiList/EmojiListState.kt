@@ -6,5 +6,6 @@ import com.google.common.collect.ImmutableList
 data class EmojiListState (
     val isLoading: Boolean = true,
     val emojiList: ImmutableList<Emoji> = ImmutableList.of(),
-    val error: String? = null
+    val error: String? = null,
+    val isRefreshing: Boolean = false
 )

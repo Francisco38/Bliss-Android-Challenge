@@ -65,10 +65,15 @@ class EmojiListViewModel @Inject constructor(
         emitAction(EmojiListActions.DeleteEmoji(emojiId))
     }
 
+    fun refresh() {
+        emitAction(EmojiListActions.Refresh)
+    }
+
     private fun processAction(
         action: EmojiListActions
     ) = when (action) {
         is EmojiListActions.GetEmojis -> processGetData()
+        is EmojiListActions.Refresh-> processRefresh()
         is EmojiListActions.DeleteEmoji -> processDeleteEmoji(action.emojiId)
     }
 
@@ -109,5 +114,36 @@ class EmojiListViewModel @Inject constructor(
                 emojiList = ImmutableList.copyOf(updatedList)
             )
         )
+    }
+
+    private fun processRefresh() = flow {
+        emit(
+            EmojiListState(
+                error = null,
+                isLoading = false,
+                isRefreshing = true
+            )
+        )
+
+        val emojiList = getEmojiList()
+
+        if (emojiList is UseCaseResponse.Success) {
+            emit(
+                EmojiListState(
+                    error = null,
+                    isLoading = false,
+                    emojiList = ImmutableList.copyOf(emojiList.data),
+                    isRefreshing = false
+                )
+            )
+        } else if (emojiList is UseCaseResponse.Error) {
+            emit(
+                EmojiListState(
+                    error = emojiList.error,
+                    isLoading = false,
+                    isRefreshing = false
+                )
+            )
+        }
     }
 }
