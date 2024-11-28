@@ -44,6 +44,7 @@ fun HomeScreen(
         modifier = modifier,
         onRandomButtonClick = { viewModel.randomEmoji() },
         onEmojiListButtonClick = { navigator.goToEmojiList() },
+        onAvatarListButtonClick = { navigator.goToAvatarList() },
         onSearchGitAvatar = { username: String -> viewModel.searchGitAvatar(username) },
         onSearchTextChange = { searchText: String -> viewModel.searchTextChange(searchText) },
         onClearError = {viewModel.clearError()},
@@ -56,6 +57,7 @@ fun HomeScreenContent(
     modifier: Modifier = Modifier,
     onRandomButtonClick: () -> Unit,
     onEmojiListButtonClick: () -> Unit,
+    onAvatarListButtonClick: () -> Unit,
     onSearchGitAvatar: (String) -> Unit,
     onSearchTextChange: (String) -> Unit,
     onClearError: () -> Unit,
@@ -94,6 +96,10 @@ fun HomeScreenContent(
                 onSearchClick = onSearchGitAvatar,
                 onSearchTextChange = onSearchTextChange,
                 searchText = data.searchText,
+            )
+
+            AvatarListButton(
+                onAvatarListButtonClick = onAvatarListButtonClick
             )
         } else {
             LoaderComponent()
@@ -173,4 +179,16 @@ fun GitHubAvatarSearch(
             contentDescRes = R.string.github_username_placeholder
         )
     }
+}
+
+@Composable
+fun AvatarListButton(
+    modifier: Modifier = Modifier,
+    onAvatarListButtonClick: () -> Unit
+) {
+    TextButton(
+        modifier = modifier,
+        onButtonClick = onAvatarListButtonClick,
+        textRes = R.string.avatar_list
+    )
 }

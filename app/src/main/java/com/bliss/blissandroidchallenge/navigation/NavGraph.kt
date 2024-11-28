@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.bliss.blissandroidchallenge.presentation.avatarList.AvatarListScreen
 import com.bliss.blissandroidchallenge.presentation.emojiList.EmojiListScreen
 import com.bliss.blissandroidchallenge.presentation.home.HomeScreen
 
@@ -27,6 +28,9 @@ fun NavGraph(
         }
         composable(EMOJI_LIST_ROUTE) {
             EmojiListScreen()
+        }
+        composable(AVATAR_LIST_ROUTE) {
+            AvatarListScreen()
         }
     }
 }
