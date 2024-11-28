@@ -45,6 +45,7 @@ fun HomeScreen(
         onRandomButtonClick = { viewModel.randomEmoji() },
         onEmojiListButtonClick = { navigator.goToEmojiList() },
         onAvatarListButtonClick = { navigator.goToAvatarList() },
+        onGoogleReposButtonClick = { navigator.goToGooglesRepos() },
         onSearchGitAvatar = { username: String -> viewModel.searchGitAvatar(username) },
         onSearchTextChange = { searchText: String -> viewModel.searchTextChange(searchText) },
         onClearError = {viewModel.clearError()},
@@ -58,6 +59,7 @@ fun HomeScreenContent(
     onRandomButtonClick: () -> Unit,
     onEmojiListButtonClick: () -> Unit,
     onAvatarListButtonClick: () -> Unit,
+    onGoogleReposButtonClick: () -> Unit,
     onSearchGitAvatar: (String) -> Unit,
     onSearchTextChange: (String) -> Unit,
     onClearError: () -> Unit,
@@ -100,6 +102,10 @@ fun HomeScreenContent(
 
             AvatarListButton(
                 onAvatarListButtonClick = onAvatarListButtonClick
+            )
+
+            GoogleReposButton(
+                onAvatarListButtonClick = onGoogleReposButtonClick
             )
         } else {
             LoaderComponent()
@@ -190,5 +196,17 @@ fun AvatarListButton(
         modifier = modifier,
         onButtonClick = onAvatarListButtonClick,
         textRes = R.string.avatar_list
+    )
+}
+
+@Composable
+fun GoogleReposButton(
+    modifier: Modifier = Modifier,
+    onAvatarListButtonClick: () -> Unit
+) {
+    TextButton(
+        modifier = modifier,
+        onButtonClick = onAvatarListButtonClick,
+        textRes = R.string.google_repos
     )
 }

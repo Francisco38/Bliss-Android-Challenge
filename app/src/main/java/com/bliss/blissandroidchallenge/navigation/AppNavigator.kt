@@ -17,4 +17,10 @@ class AppNavigator @Inject constructor(
             launchSingleTop = true
         }
     }
+
+    override fun goToGooglesRepos() {
+        controller.navigate(route = GOOGLE_REPOS_ROUTE) {
+            launchSingleTop = true
+        }
+    }
 }

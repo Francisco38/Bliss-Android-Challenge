@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bliss.blissandroidchallenge.presentation.avatarList.AvatarListScreen
 import com.bliss.blissandroidchallenge.presentation.emojiList.EmojiListScreen
+import com.bliss.blissandroidchallenge.presentation.googleRepoList.GoogleRepoListScreen
 import com.bliss.blissandroidchallenge.presentation.home.HomeScreen
 
 @Composable
@@ -31,6 +32,9 @@ fun NavGraph(
         }
         composable(AVATAR_LIST_ROUTE) {
             AvatarListScreen()
+        }
+        composable(GOOGLE_REPOS_ROUTE) {
+            GoogleRepoListScreen()
         }
     }
 }
