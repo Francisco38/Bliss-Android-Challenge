@@ -2,6 +2,7 @@ package com.bliss.blissandroidchallenge.presentation.components
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ fun IconButton(
 ) {
     Button(
         modifier = modifier,
+        shape = RoundedCornerShape(0),
         onClick = onButtonClick
     ) {
         if (iconRes != null) {

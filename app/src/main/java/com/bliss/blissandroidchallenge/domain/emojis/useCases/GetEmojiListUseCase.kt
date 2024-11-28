@@ -13,6 +13,6 @@ class GetEmojiListUseCase @Inject constructor(
             val emojiList = emojiRepository.getEmojiList()
             UseCaseResponse.Success(emojiList)
         } catch (ex: Exception) {
-            UseCaseResponse.Error(ex.message!!)
+            UseCaseResponse.Error("Error obtaining data")
         }
 }

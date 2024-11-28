@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-val emojiUrl = "https://api.github.com/emojis"
+const val emojiUrl = "https://api.github.com/emojis"
 
 fun emojiGetRequest(): List<Emoji> {
     val client = OkHttpClient()

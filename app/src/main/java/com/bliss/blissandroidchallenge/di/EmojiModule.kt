@@ -16,10 +16,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ExampleModule {
+object EmojiModule {
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext appContext: Context): EmojiDb {
+    fun provideEmojiDatabase(@ApplicationContext appContext: Context): EmojiDb {
         return Room.databaseBuilder(
             appContext,
             EmojiDb::class.java,
@@ -29,12 +29,13 @@ object ExampleModule {
 
     @Provides
     @Singleton
-    fun provideEmojiDao(emojiDb: EmojiDb) : EmojiDao {
+    fun provideEmojiDao(emojiDb: EmojiDb): EmojiDao {
         return emojiDb.emojiDao()
     }
+
     @Provides
     @Singleton
-    fun provideTaskRepository(emojiDao: EmojiDao): EmojiRepository {
+    fun provideEmojiRepository(emojiDao: EmojiDao): EmojiRepository {
         return EmojiRepositoryImpl(emojiDao)
     }
 }

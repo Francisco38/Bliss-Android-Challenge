@@ -16,11 +16,8 @@ class EmojiRepositoryImpl @Inject constructor(
             emojiList = emojiGetRequest()
 
             emojiDao.insertAll(*emojiList.toTypedArray())
+        }
 
-            return emojiList
-        }
-        else{
-            return emojiList
-        }
+        return emojiList
     }
 }

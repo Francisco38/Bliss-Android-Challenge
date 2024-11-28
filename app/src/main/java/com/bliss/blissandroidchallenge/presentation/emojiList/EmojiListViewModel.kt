@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bliss.blissandroidchallenge.di.IoDispatcher
 import com.bliss.blissandroidchallenge.domain.emojis.useCases.GetEmojiListUseCase
-import com.bliss.blissandroidchallenge.presentation.home.HomeActions
 import com.bliss.blissandroidchallenge.utils.UseCaseResponse
 import com.google.common.collect.ImmutableList
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -61,7 +60,7 @@ class EmojiListViewModel @Inject constructor(
         emitAction(EmojiListActions.GetEmojis)
     }
 
-    fun deleteEmoji( emojiId: Int ) {
+    fun deleteEmoji(emojiId: Int) {
         emitAction(EmojiListActions.DeleteEmoji(emojiId))
     }
 
@@ -69,12 +68,17 @@ class EmojiListViewModel @Inject constructor(
         emitAction(EmojiListActions.Refresh)
     }
 
+    fun clearError() {
+        emitAction(EmojiListActions.ClearError)
+    }
+
     private fun processAction(
         action: EmojiListActions
     ) = when (action) {
         is EmojiListActions.GetEmojis -> processGetData()
-        is EmojiListActions.Refresh-> processRefresh()
+        is EmojiListActions.Refresh -> processRefresh()
         is EmojiListActions.DeleteEmoji -> processDeleteEmoji(action.emojiId)
+        is EmojiListActions.ClearError -> processClearError()
     }
 
     private fun processGetData() = flow {
@@ -145,5 +149,13 @@ class EmojiListViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    private fun processClearError() = flow {
+        val currentData = _state.value
+
+        emit(
+            currentData.copy(error = null)
+        )
     }
 }
