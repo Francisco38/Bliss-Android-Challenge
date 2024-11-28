@@ -14,12 +14,13 @@ import androidx.compose.ui.res.stringResource
 fun IconButton(
     modifier: Modifier = Modifier,
     onButtonClick: () -> Unit,
+    shape: RoundedCornerShape = RoundedCornerShape(25),
     @DrawableRes iconRes: Int? = null,
     @StringRes contentDescRes: Int? = null,
 ) {
     Button(
         modifier = modifier,
-        shape = RoundedCornerShape(0),
+        shape = shape,
         onClick = onButtonClick
     ) {
         if (iconRes != null) {

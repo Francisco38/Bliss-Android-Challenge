@@ -10,7 +10,6 @@ class AvatarRepositoryImpl @Inject constructor(
     private val avatarDao: AvatarDao
 ) : AvatarRepository {
 
-
     override suspend fun getAvatar(username: String): Avatar {
         var avatar = avatarDao.getAvatar(username.trim())
 
