@@ -4,4 +4,6 @@ interface Navigator {
     fun goToEmojiList()
 
     fun goToAvatarList()
+
+    fun goToGooglesRepos()
 }
