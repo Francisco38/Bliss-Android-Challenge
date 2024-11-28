@@ -22,7 +22,7 @@ class AvatarRepositoryImpl @Inject constructor(
         return avatar
     }
 
-    override suspend fun getAllAvatar(username: String): List<Avatar> {
+    override suspend fun getAllAvatars(): List<Avatar> {
         return avatarDao.getAll()
     }
 

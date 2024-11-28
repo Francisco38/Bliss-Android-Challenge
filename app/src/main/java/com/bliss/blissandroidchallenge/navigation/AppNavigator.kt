@@ -11,4 +11,10 @@ class AppNavigator @Inject constructor(
             launchSingleTop = true
         }
     }
+
+    override fun goToAvatarList() {
+        controller.navigate(route = AVATAR_LIST_ROUTE) {
+            launchSingleTop = true
+        }
+    }
 }

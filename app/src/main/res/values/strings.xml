@@ -3,5 +3,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="random_emoji">RANDOM EMOJI</string>
     <string name="emoji_list">EMOJI LIST</string>
+    <string name="avatar_list">AVATAR LIST</string>
     <string name="github_username_placeholder">Insert GitHub username</string>
 </resources>
