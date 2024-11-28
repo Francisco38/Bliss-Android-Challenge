@@ -12,12 +12,13 @@ import androidx.compose.ui.res.stringResource
 fun TextButton(
     modifier: Modifier = Modifier,
     onButtonClick: () -> Unit,
+    shape: RoundedCornerShape = RoundedCornerShape(25),
     @StringRes textRes: Int? = null
 ) {
     if (textRes != null) {
         Button(
             modifier = modifier,
-            shape = RoundedCornerShape(0),
+            shape = shape,
             onClick = onButtonClick
         ) {
             Text(

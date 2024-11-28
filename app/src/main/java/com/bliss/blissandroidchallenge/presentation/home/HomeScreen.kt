@@ -4,22 +4,26 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,7 +34,6 @@ import com.bliss.blissandroidchallenge.presentation.components.IconButton
 import com.bliss.blissandroidchallenge.presentation.components.ImageComponent
 import com.bliss.blissandroidchallenge.presentation.components.LoaderComponent
 import com.bliss.blissandroidchallenge.presentation.components.TextButton
-import com.bliss.blissandroidchallenge.utils.toDp
 
 @Composable
 fun HomeScreen(
@@ -77,7 +80,8 @@ fun HomeScreenContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -134,22 +138,17 @@ fun EmojiActions(
     onRandomButtonClick: () -> Unit,
     onEmojiListButtonClick: () -> Unit
 ) {
-    var randomButtonWidth by remember { mutableIntStateOf(0) }
-
     Column(
         modifier = modifier,
     ) {
         TextButton(
-            modifier = Modifier
-                .onGloballyPositioned { coordinates ->
-                    randomButtonWidth = coordinates.size.width
-                },
+            modifier = Modifier.fillMaxWidth(),
             onButtonClick = onRandomButtonClick,
             textRes = R.string.random_emoji
         )
 
         TextButton(
-            modifier = Modifier.width(randomButtonWidth.toDp()),
+            modifier = Modifier.fillMaxWidth(),
             onButtonClick = onEmojiListButtonClick,
             textRes = R.string.emoji_list
         )
@@ -165,9 +164,15 @@ fun GitHubAvatarSearch(
 ) {
 
     Row(
-        modifier = modifier.padding(top = 32.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 32.dp, bottom = 4.dp)
+            .height(55.dp)
     ) {
         TextField(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f),
             value = searchText,
             onValueChange = { onSearchTextChange(it) },
             placeholder = {
@@ -177,11 +182,23 @@ fun GitHubAvatarSearch(
                     )
                 )
             },
-            singleLine = true
+            singleLine = true,
+            shape = RoundedCornerShape(topStartPercent = 25, bottomStartPercent = 25),
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+            )
         )
         IconButton(
+            modifier = Modifier.fillMaxHeight(),
             onButtonClick = { onSearchClick(searchText) },
             iconRes = R.drawable.ic_search,
+            shape = RoundedCornerShape(
+                topStartPercent = 0,
+                bottomStartPercent = 0,
+                topEndPercent = 25,
+                bottomEndPercent = 25
+            ),
             contentDescRes = R.string.github_username_placeholder
         )
     }
@@ -193,7 +210,7 @@ fun AvatarListButton(
     onAvatarListButtonClick: () -> Unit
 ) {
     TextButton(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         onButtonClick = onAvatarListButtonClick,
         textRes = R.string.avatar_list
     )
@@ -205,7 +222,7 @@ fun GoogleReposButton(
     onAvatarListButtonClick: () -> Unit
 ) {
     TextButton(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         onButtonClick = onAvatarListButtonClick,
         textRes = R.string.google_repos
     )
